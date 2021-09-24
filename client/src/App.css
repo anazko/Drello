@@ -1,0 +1,21 @@
+@import '~antd/dist/antd.css';
+
+html, body, #root {
+  min-height: 100%;
+}
+
+.login-page-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.h100 {
+  height: calc(100vh - 64px);
+}
+
+.loginToggle {
+  cursor: pointer;
+  color: #69c0ff;
+}
