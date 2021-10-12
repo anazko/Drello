@@ -6,6 +6,7 @@ const userRouter = new Router()
 
 userRouter.post('/register', userController.register)
 userRouter.post('/login', userController.login)
-userRouter.post('/auth', authMiddleware, userController.check)
+userRouter.get('/auth', authMiddleware, userController.check)
+userRouter.get('/profile', authMiddleware, userController.getUserProfile)
 
 module.exports = userRouter;

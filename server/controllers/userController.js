@@ -18,31 +18,46 @@ class UserController {
       res.status(403).json({ message: "Пользователь с таким email уже существует" })
     }
     const hashPassword = await bcrypt.hash(password, 5)
-    const user = await User.create({ email, password: hashPassword, role: "USER" })
-    const token = createJWT({email, id: user.id, role: user.role})
-    return res.json({ token })
+    const user = await User.create({ email, password: hashPassword })
+    const token = createJWT({email, id: user.id})
+    return res.status(200).json({ token })
   }
 
   async login(req, res, next) {
     const { email, password } = req.body
     if (!email || !password) {
-      return res.json({ message: "Отсутствует логин или пароль" })
+      return res.status(403).json({ message: "Отсутствует логин или пароль" })
     }
     const user = await User.findOne({where: {email} })
     if (!user) {
-      return res.json({ message: "Пользователь не найден" })
+      return res.status(403).json({ message: "Пользователь с таким email не найден" })
     }
     const comparePassword = bcrypt.compareSync(password, user.password)
     if (!comparePassword) {
-      return res.json({ message: "Пароль не верный" })
+      return res.status(403).json({ message: "Неверный пароль" })
     }
-    const token = createJWT({ email, id: user.id, role: user.role })
-    return res.json({ token })
+    const token = createJWT({email, id: user.id})
+    return res.status(200).json({ token })
   }
 
   async check(req, res) {
-    const token = createJWT({ email: req.user.email, id: req.user.id, role: req.user.role })
-    return res.json({ token })
+    const token = createJWT({ id: req.user.id, email: req.user.email })
+    return res.status(200).json({ token })
+  }
+
+  async getUserProfile(req, res) {
+    const {id} = req.user 
+    const user = await User.findOne({where: {id} }) 
+    if (!user) return res.status(404).json({ message: `Профиль пользователя c id=${id} не найден` })
+    console.log("----------USER: ", user)
+    const response = { 
+      id: user.id, 
+      email: user.email, 
+      fullName: user.fullName, 
+      description: user.description, 
+      avatar: user.avatar
+    }
+    return res.status(200).json(response)
   }
 
 }

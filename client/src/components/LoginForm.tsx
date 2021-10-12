@@ -1,5 +1,4 @@
-import { Button, Checkbox, Form, Input } from "antd"
-import { useState } from "react"
+import { Button, Form, Input } from "antd"
 
 interface IProps {
   onSubmit: (email: string, password: string) => void
@@ -8,23 +7,14 @@ interface IProps {
 
 const LoginForm = ({onSubmit, registration}: IProps) => {
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  const submitHandler = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log();
-    
-    //onSubmit(email, password)
-  }
-
   const onFinish = (values: any) => {
     const {email, password} = values
-    console.log('Success:', email, password);
+    console.log('Login form success:', email, password);
+    onSubmit(email, password)
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    console.log('Login form Fail:', errorInfo);
   };
 
   return (
@@ -35,7 +25,7 @@ const LoginForm = ({onSubmit, registration}: IProps) => {
       // wrapperCol={{ span: 16 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      onFinishFailed={() => {}}
+      onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item

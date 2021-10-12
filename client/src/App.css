@@ -1,21 +1,69 @@
 @import '~antd/dist/antd.css';
 
-html, body, #root {
+/* html, body, #root {
   min-height: 100%;
-}
-
-.login-page-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
+} */
 
 .h100 {
   height: calc(100vh - 64px);
 }
 
+.user-bar {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.user-menu {
+  position: absolute;
+  top: 74px;
+  right: 0;
+  width: 300px;
+  /* display: flex;
+  flex-direction: column; */
+  padding: 20px;
+  line-height: normal;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.user-menu .ant-divider {
+  margin: 10px 0;
+}
+
+.user-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: -20px -20px 20px -20px;
+  padding: 20px;
+  background: #fafafa;
+}
+
+.user-menu-header h3 {
+  margin-bottom: 0;
+  font-size: 18px;
+}
+
+.close-user-menu-btn {
+  cursor: pointer;
+}
+
+.avatar-wrapper {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 .loginToggle {
   cursor: pointer;
   color: #69c0ff;
+}
+
+.site-layout-background {
+  background: #fff;
 }

@@ -6,13 +6,15 @@ class WorkspaceController {
   async getAll(req, res, next) {
     console.log('All workspaces')
     const workspaces = await Workspace.findAll()
-    res.json(workspaces)
+    if (!workspaces) return res.status(404).json({ message: "Рабочие пространства не найдены" })
+    res.status(200).json(workspaces)
   }
 
   async getOne(req, res, next) {
     const {id} = req.params
     const workspace = await Workspace.findOne({ where: {id} })
-    return res.json(workspace)
+    if (!workspace) return res.status(404).json({ message: `Рабочее пространство с id=${id} не найдено` })
+    return res.status(200).json(workspace)
   }
 
   async update(req, res, next) {
@@ -21,7 +23,7 @@ class WorkspaceController {
     console.log(id)
     try {
       const workspace = await Workspace.update(req.body, { where: {id} })
-      return await res.json(workspace)
+      return await res.status(200).json(workspace)
     }
     catch (e) {
       console.log(e.message)
@@ -33,7 +35,7 @@ class WorkspaceController {
     const {id} = req.params
     try {
       await Workspace.destroy({ where: {id} }) 
-      return res.json({deleted: id})
+      return res.status(200).json({deleted: id})
     }
     catch (e) {
       console.log(e.message)
@@ -46,7 +48,7 @@ class WorkspaceController {
       console.log("create Workspace:", newWorkspace)
       try {
         const workspace = await Workspace.create(newWorkspace)
-        return await res.json(workspace)
+        return await res.status(200).json(workspace)
       }
       catch (e) {
         console.log(e.message)
